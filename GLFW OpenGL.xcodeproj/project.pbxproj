@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72AE17082557EF9200C224A7 /* README.MD in Sources */ = {isa = PBXBuildFile; fileRef = 72AE17072557EF9200C224A7 /* README.MD */; };
 		72B4F1DA255691A300BA9BF4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72B4F1D9255691A300BA9BF4 /* main.cpp */; };
 		72B4F1E32556929600BA9BF4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72B4F1E22556929600BA9BF4 /* OpenGL.framework */; };
 		72B4F1E62556942B00BA9BF4 /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72B4F1E42556937700BA9BF4 /* libGLEW.2.2.0.dylib */; };
@@ -28,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		72AE17072557EF9200C224A7 /* README.MD */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.MD; sourceTree = "<group>"; };
 		72B4F1D6255691A300BA9BF4 /* GLFW OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "GLFW OpenGL"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72B4F1D9255691A300BA9BF4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		72B4F1E22556929600BA9BF4 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -71,6 +73,7 @@
 		72B4F1D8255691A300BA9BF4 /* GLFW OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				72AE17072557EF9200C224A7 /* README.MD */,
 				72B4F1ED2557BBB500BA9BF4 /* glad.c */,
 				72B4F1D9255691A300BA9BF4 /* main.cpp */,
 				72B4F1EA2556DF8500BA9BF4 /* main_00_mac_setting_bak.cpp */,
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72B4F1EB2556DF8500BA9BF4 /* main_00_mac_setting_bak.cpp in Sources */,
+				72AE17082557EF9200C224A7 /* README.MD in Sources */,
 				72B4F1DA255691A300BA9BF4 /* main.cpp in Sources */,
 				72B4F1EE2557BBB500BA9BF4 /* glad.c in Sources */,
 			);
