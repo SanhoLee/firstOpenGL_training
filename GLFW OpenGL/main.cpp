@@ -1,7 +1,7 @@
 #include <iostream>
 
 // GLAD, it loads needed library by using website.
-// openGL version = 4.6
+// openGL version = 3.3
 #include <glad/glad.h>
 // GLFW
 #include <GLFW/glfw3.h>
@@ -15,7 +15,7 @@ const unsigned int SCR_HEIGHT = 600;
 // compile shaders : vertex, fragment shader
 //
 // activate vertex shader just like this
-const char *vertexShaderSource = "#version 460 core\n"
+const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main()\n"
     "{\n"
@@ -23,7 +23,7 @@ const char *vertexShaderSource = "#version 460 core\n"
     "}\0";
 //
 // activate fragment shader just like this
-const char *fragmentShaderSource = "#version 460 core\n"
+const char *fragmentShaderSource = "#version 330 core\n"
     "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"
@@ -101,14 +101,15 @@ int main(){
         std::cout<< "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
     
-    // activate the program
     // 이후에 shader와 렌더링 명령은 프로그램 객체를 사용하며, 프로그램을 활성화 한후 shader를 반드시 삭제? 해줘야 한다.
     // 더이상 shader (컴파일된)객체가 필요하지 않음.
-    glUseProgram(shaderProgram);
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     
-
+    
+    //  ------------- shader and program setting end --------------  //
+    
+    
     // set up vertex data!
     float vertices[]={
         -0.5f, -0.5f, 0.0f,
@@ -126,9 +127,15 @@ int main(){
     // 버퍼를 바인딩한다. vertex buffer object의 버퍼 유형은 GL_ARRAY_BUFFER이며, 이를 opengl과 바인딩한다.
     // vertex 유형을 갖는 버퍼는 VBO 변수를 통해 사용할수 있게 된다.
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    
-    // 미리정의된 vertex데이터를 메모리에 복사한다.
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    // OpenGL에게 정점 데이터를 shader attributes(속성)등을 이용해서 받아들이는? 연결 방법을 알려줘야한다.
+    // Linking Vertex Attributes , vertex속성 포인터 설정
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    
+    
     
     //    loop rendering.
     while(!glfwWindowShouldClose(window)){
@@ -141,6 +148,9 @@ int main(){
         // state-using function
         // 화면을 위에서 셋팅한 색으로 지워버림.
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        // activate the program
+        glUseProgram(shaderProgram);
         
         
         glfwSwapBuffers(window);
