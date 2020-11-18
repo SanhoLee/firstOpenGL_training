@@ -112,17 +112,26 @@ int main(){
     
     // set up vertex data!
     float vertices[]={
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+        0.5f, 0.5f, 0.0f,   // top right
+        0.5f, -0.5f, 0.0f,  // bottom right
+       -0.5f, -0.5f, 0.0f,  // bottom left
+       -0.5f, 0.5f, 0.0f    // top left
+    };
+    //    index, start from 0.
+    unsigned int indices[] = {
+        0,1,3,  // first Triangle
+        1,2,3   // second Triagle
     };
     
-    // VBO = VERTEX BUFFER OBJECT
+    // VBO : VERTEX BUFFER OBJECT
+    // VAO : VERTEX ARRAY OBJECT
+    // EBO : ELEMENT BUFFER OBJECT
     // VERTEX데이터를 전송하기 위해 버퍼 변수를 생성
-    unsigned int VBO, VAO;
+    unsigned int VBO, VAO, EBO;
     
     // glGenBuffers([버퍼생성 갯수],[버퍼 저장할 변수, 배열?])
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
     // VAO 구성
     glGenVertexArrays(1, &VAO);
     
@@ -131,12 +140,18 @@ int main(){
     // vertex 유형을 갖는 버퍼는 VBO 변수를 통해 사용할수 있게 된다.
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    // EBO 버퍼 바인딩, indices 정보를 버퍼로 복사함.
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    
+    
     // OpenGL에게 정점 데이터를 shader attributes(속성)등을 이용해서 받아들이는? 연결 방법을 알려줘야한다.
     // Linking Vertex Attributes , vertex속성 포인터 설정
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     
-    // unbind VBO, glVertexAttribPointer를 호출함으로써, VBO에 대한 속성 내용을 정점 버퍼 오브젝트에 등록하게된다. 곧 unbind 해도 된다.
+    // unbind VBO, glVertexAttribPointer를 호출함으로써, VBO에 대한 속성 내용을 정점 버퍼 오브젝트에 등록하게된다. 곧 unbind(bind를 0으로 처리, 즉 NULL pointer?) 해도 된다.
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     // unbind VAO, 오브젝트를 그리기 위한 속성 구성은 VAO에 저장이 됐다? 그래서 이제 오브젝트를 그리고 싶을 때 VAO를 호출해서 그리고, 다시 unbind하는 방식을 따름?
     glBindVertexArray(0);
@@ -156,7 +171,8 @@ int main(){
         // activate the program
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES,0,3);
+        // glDrawArrays(GL_TRIANGLES,0,3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -164,7 +180,8 @@ int main(){
     
     //    Optional
     glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1,&VBO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
     glDeleteProgram(shaderProgram);
     
     //    delete or free all sources for rendering(buffers)?
